@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blab;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
@@ -29,9 +30,15 @@ class BlabController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request) : RedirectResponse
     {
-        //
+        $validated = $request->validate([
+            'message' => 'required|string|max:255',
+        ]);
+
+        $request->user()->blabs()->create($validated);
+
+        return redirect(route('blabs.index'));
     }
 
     /**

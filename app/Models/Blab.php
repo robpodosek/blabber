@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Blab extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'message',
+    ];
 }
