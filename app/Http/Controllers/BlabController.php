@@ -34,6 +34,7 @@ class BlabController extends Controller
      */
     public function store(Request $request) : RedirectResponse
     {
+        # TODO: Use form validation rules https://laravel.com/docs/10.x/validation#form-request-validation
         $validated = $request->validate([
             'message' => 'required|string|max:255',
         ]);
@@ -66,16 +67,29 @@ class BlabController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Blab $blab)
+    public function update(Request $request, Blab $blab) : RedirectResponse
     {
-        //
+        $this->authorize('update', $blab);
+
+        # TODO: Use form validation rules https://laravel.com/docs/10.x/validation#form-request-validation
+        $validated = $request->validate([
+            'message' => 'required|string|max:255',
+        ]);
+
+        $blab->update($validated);
+
+        return redirect(route('blabs.index'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Blab $blab)
+    public function destroy(Blab $blab) : RedirectResponse
     {
-        //
+        $this->authorize('delete', $blab);
+
+        $blab->delete();
+
+        return redirect(route('blabs.index'));
     }
 }
