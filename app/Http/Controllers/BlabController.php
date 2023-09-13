@@ -58,8 +58,8 @@ class BlabController extends Controller
     {
         $this->authorize('update', $blab);
 
-        return view('blabs.edit',[
-            'blab' => $blab
+        return view('blabs.edit', [
+            'blab' => $blab,
         ]);
     }
 
