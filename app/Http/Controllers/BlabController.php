@@ -54,9 +54,13 @@ class BlabController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Blab $blab)
+    public function edit(Blab $blab) : View
     {
-        //
+        $this->authorize('update', $blab);
+
+        return view('blabs.edit',[
+            'blab' => $blab
+        ]);
     }
 
     /**
